@@ -56,8 +56,8 @@ public class Fragment_table extends Fragment
                     @Override
                     protected void onBindViewHolder(@NonNull ProductViewHolder holder, int position, @NonNull final Products model)
                     {
-                        holder.txtproductName.setText("Name = "+model.getPname());
-                        holder.txtproductPrice.setText("Price = Rs. " + model.getPrice());
+                        holder.txtproductName.setText(model.getPname());
+                        holder.txtproductPrice.setText("Rs." + model.getPrice());
 
                         Picasso.get().load(model.getImage()).into(holder.imageView);
 
