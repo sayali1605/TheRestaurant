@@ -105,7 +105,8 @@
         android:layout_gravity="center"
         android:layout_margin="15dp"
         android:background="#34f5ff"
-        android:text="Add to Cart"
+        android:text="Add Order for Selected Table"
+        android:textAlignment="center"
         android:textColor="@color/colorAccent"
         android:textSize="18dp" />
 

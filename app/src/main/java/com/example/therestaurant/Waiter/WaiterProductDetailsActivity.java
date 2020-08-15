@@ -42,7 +42,7 @@ public class WaiterProductDetailsActivity extends AppCompatActivity
     private Button addToCartButton;
     private ElegantNumberButton numberButton;
     private CircleImageView productImage;
-    private TextView productPrice,productDescription,productName;
+    private TextView productPrice,productName;
     private String productId = "",Name,Phone,status="unpaid";
     private DatabaseReference  WaiterRef;
     TextView selected;
@@ -73,7 +73,6 @@ public class WaiterProductDetailsActivity extends AppCompatActivity
         numberButton = (ElegantNumberButton) findViewById(R.id.waiter_numberBtn);
         productImage =(CircleImageView) findViewById(R.id.waiter_product_image_details);
         productName =(TextView) findViewById(R.id.waiter_product_name_details);
-        productDescription =(TextView) findViewById(R.id.waiter_product_description_details);
         productPrice =(TextView) findViewById(R.id.waiter_product_price_details);
         member = new Member();
 
@@ -231,7 +230,7 @@ public class WaiterProductDetailsActivity extends AppCompatActivity
                     Products products = dataSnapshot.getValue(Products.class);
 
                     productName.setText(products.getPname());
-                    productPrice.setText(products.getPrice());
+                    productPrice.setText("Rs." + products.getPrice());
                     Picasso.get().load(products.getImage()).into(productImage);
                 }
             }

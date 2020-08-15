@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:title="tables"
-        android:icon="@drawable/restaurant_table"
-        android:id="@+id/waiter_tables"/>
+        android:title="Menu Card"
+        android:icon="@drawable/menu"
+        android:id="@+id/waiter_menu"/>
 
     <item
-        android:title="Cart List"
+        android:title="Order List"
         android:icon="@drawable/cart"
-        android:id="@+id/waiter_cart"/>
+        android:id="@+id/waiter_order"/>
 
     <item
         android:title="Logout"

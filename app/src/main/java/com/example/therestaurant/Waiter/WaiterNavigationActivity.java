@@ -67,10 +67,10 @@ public class WaiterNavigationActivity extends AppCompatActivity implements Navig
     {
         switch (menuItem.getItemId())
         {
-            case R.id.waiter_tables:
+            case R.id.waiter_menu:
                 getSupportFragmentManager().beginTransaction().replace(R.id.waiter_fragment_container,new Fragment_table()).commit();
                 break;
-            case R.id.waiter_cart:
+            case R.id.waiter_order:
                 Intent addintent =new Intent(WaiterNavigationActivity.this, WaiterCartActivity.class);
                 startActivity(addintent);
                 break;
