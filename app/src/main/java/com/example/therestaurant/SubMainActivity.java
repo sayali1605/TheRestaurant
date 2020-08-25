@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.therestaurant.Admin.AdminLoginActivity;
+import com.example.therestaurant.Kitchen.KitchenLoginActivity;
 import com.example.therestaurant.Waiter.WaiterLoginActivity;
 
 
@@ -42,7 +43,7 @@ public class SubMainActivity extends AppCompatActivity
         kitchen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SubMainActivity.this,MainActivity.class);
+                Intent intent = new Intent(SubMainActivity.this, KitchenLoginActivity.class);
                 startActivity(intent);
             }
         });

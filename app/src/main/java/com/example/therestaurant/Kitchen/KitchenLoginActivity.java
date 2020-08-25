@@ -1,4 +1,7 @@
-package com.example.therestaurant.Admin;
+package com.example.therestaurant.Kitchen;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,11 +13,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.example.therestaurant.Admin.AdminLoginActivity;
+import com.example.therestaurant.Admin.AdminNavigationActivity;
+import com.example.therestaurant.Admin.AdminRegistrationActivity;
 import com.example.therestaurant.Model.Admin;
+import com.example.therestaurant.Model.Kitchen;
 import com.example.therestaurant.Prevalent.PrevalentAdmin;
+import com.example.therestaurant.Prevalent.PrevalentKitchen;
 import com.example.therestaurant.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,25 +27,24 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class AdminLoginActivity extends AppCompatActivity
-{
+public class KitchenLoginActivity extends AppCompatActivity {
+
     EditText mphone,mPassword;
     Button mLoginBtn;
     TextView mCreateBtn;
     private TextView forgotPassword;
     ProgressBar progressBar;
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_login);
+        setContentView(R.layout.activity_kitchen_login);
 
-        mphone = findViewById(R.id.admin_login_phone);
-        mPassword = findViewById(R.id.admin_login_password);
-        progressBar = findViewById(R.id.admin_progressBar_login);
-        mLoginBtn = findViewById(R.id.admin_login);
-        forgotPassword = (TextView) findViewById(R.id.admin_forgot_password);
-        mCreateBtn = findViewById(R.id.admin_Register_here);
+        mphone = findViewById(R.id.kitchen_login_phone);
+        mPassword = findViewById(R.id.kitchen_login_password);
+        progressBar = findViewById(R.id.kitchen_progressBar_login);
+        mLoginBtn = findViewById(R.id.kitchen_login);
+        forgotPassword = (TextView) findViewById(R.id.kitchen_forgot_password);
+        mCreateBtn = findViewById(R.id.kitchen_Register_here);
 
         mLoginBtn.setOnClickListener(new View.OnClickListener()
         {
@@ -67,7 +71,6 @@ public class AdminLoginActivity extends AppCompatActivity
 
                 progressBar.setVisibility(View.VISIBLE);
 
-
                 final DatabaseReference RootRef;
                 RootRef = FirebaseDatabase.getInstance().getReference();
                 RootRef.addListenerForSingleValueEvent(new ValueEventListener()
@@ -75,32 +78,32 @@ public class AdminLoginActivity extends AppCompatActivity
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot)
                     {
-                        if(dataSnapshot.child("Admin").child(phone).exists())
+                        if(dataSnapshot.child("Kitchen").child(phone).exists())
                         {
-                            Admin userData =dataSnapshot.child("Admin").child(phone).getValue(Admin.class);
+                            Kitchen userData =dataSnapshot.child("Kitchen").child(phone).getValue(Kitchen.class);
 
                             if(userData.getPhone_no().equals(phone))
                             {
                                 if(userData.getPassword().equals(password))
                                 {
-                                    Toast.makeText(AdminLoginActivity.this, "Welcome , Logged in successfully" , Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(KitchenLoginActivity.this, "Welcome , Logged in successfully" , Toast.LENGTH_SHORT).show();
 
-                                    Intent createintent =new Intent(AdminLoginActivity.this, AdminNavigationActivity.class);
-                                    PrevalentAdmin.CurrentOnlineUser = userData ;
+                                    Intent createintent =new Intent(KitchenLoginActivity.this, KitchenNavigationActivity.class);
+                                    PrevalentKitchen.CurrentOnlineUser = userData ;
                                     startActivity(createintent);
                                     finish();
                                 }
                                 else
                                 {
-                                    Toast.makeText(AdminLoginActivity.this, "Password is incorrect.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(KitchenLoginActivity.this, "Password is incorrect.", Toast.LENGTH_SHORT).show();
                                     progressBar.setVisibility(View.INVISIBLE);
                                 }
                             }
                         }
                         else
                         {
-                            Toast.makeText(AdminLoginActivity.this, "Account with this  " + phone + "number do not exist", Toast.LENGTH_SHORT).show();
-                            Toast.makeText(AdminLoginActivity.this, "You need to create a new account.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(KitchenLoginActivity.this, "Account with this  " + phone + "number do not exist", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(KitchenLoginActivity.this, "You need to create a new account.", Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.INVISIBLE);
                         }
                     }
@@ -118,7 +121,7 @@ public class AdminLoginActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent createintent =new Intent(AdminLoginActivity.this, AdminRegistrationActivity.class);
+                Intent createintent =new Intent(KitchenLoginActivity.this, KitchenRegistrationActivity.class);
                 startActivity(createintent);
                 finish();
             }

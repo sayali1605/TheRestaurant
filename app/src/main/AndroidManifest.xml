@@ -11,7 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Waiter.WaiterConfirmFinalOrderActivity"></activity>
+        <activity android:name=".Kitchen.KitchenReceivedOrderActivity"></activity>
+        <activity android:name=".Kitchen.KitchenNavigationActivity" />
+        <activity android:name=".Kitchen.KitchenRegistrationActivity" />
+        <activity android:name=".Kitchen.KitchenLoginActivity" />
+        <activity android:name=".Waiter.WaiterConfirmFinalOrderActivity" />
         <activity android:name=".Waiter.WaiterShowProductActivity" />
         <activity android:name=".Waiter.WaiterCartActivity" />
         <activity android:name=".Waiter.WaiterProductDetailsActivity" />

@@ -54,7 +54,7 @@
                 android:layout_marginEnd="0dp"
                 android:layout_marginRight="0dp"
                 android:layout_below="@+id/product_name"
-                android:text="Product Quantity"
+                android:text="Product Price"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
                 android:textSize="20dp"
