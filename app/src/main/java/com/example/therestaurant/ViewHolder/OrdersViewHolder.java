@@ -1,6 +1,7 @@
 package com.example.therestaurant.ViewHolder;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -9,18 +10,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.therestaurant.Interface.ItemClickListner;
 import com.example.therestaurant.R;
 
-public class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
+public class OrdersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
 {
-    public TextView txtProductName, txtProductPrice,txtProductQuantity;
+    public TextView txtTableName, txtTotalPrice;
+    public Button ProductList;
     private ItemClickListner itemClickListner;
 
-    public CartViewHolder(@NonNull View itemView)
+    public OrdersViewHolder(@NonNull View itemView)
     {
         super(itemView);
 
-        txtProductName = itemView.findViewById(R.id.waiter_cart_product_name);
-        txtProductPrice = itemView.findViewById(R.id.waiter_cart_product_price);
-        txtProductQuantity = itemView.findViewById(R.id.waiter_cart_product_quantity);
+        txtTableName = itemView.findViewById(R.id.waiter_cart_table_name);
+        txtTotalPrice = itemView.findViewById(R.id.waiter_cart_total_price);
+        ProductList = itemView.findViewById(R.id.waiter_cart_product_list);
     }
 
     @Override

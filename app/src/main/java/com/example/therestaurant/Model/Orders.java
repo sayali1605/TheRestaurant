@@ -1,20 +1,39 @@
 package com.example.therestaurant.Model;
 
-public class Cart
+public class Orders
 {
-    private  String pid, pname, price, quantity, table, waiterName ,waiterPhone;
+    private  String date, pid, pname, price, quantity, status, table, waiterName ,waiterPhone;
 
-    public Cart() {
+    public Orders() {
     }
 
-    public Cart(String pid, String pname, String price, String quantity, String table, String waiterName, String waiterPhone) {
+    public Orders(String date, String pid, String pname, String price, String quantity, String status, String table, String waiterName, String waiterPhone) {
+        this.date = date;
         this.pid = pid;
         this.pname = pname;
         this.price = price;
         this.quantity = quantity;
+        this.status = status;
         this.table = table;
         this.waiterName = waiterName;
         this.waiterPhone = waiterPhone;
+    }
+
+    public String getDate()
+    {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getPid() {
@@ -49,7 +68,8 @@ public class Cart
         this.quantity = quantity;
     }
 
-    public String getTable() {
+    public String getTable()
+    {
         return table;
     }
 

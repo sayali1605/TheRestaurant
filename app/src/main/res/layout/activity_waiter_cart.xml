@@ -12,15 +12,15 @@
         android:id="@+id/waiter_toolbar_cart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#34f5ff"
+        android:background="@color/colorPrimary"
         >
     </androidx.appcompat.widget.Toolbar>
 
-    <RelativeLayout
+    <!--<RelativeLayout
         android:id="@+id/waiter_rlll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#34f5ff"
+        android:background="@color/colorPrimary"
         android:layout_alignParentTop="true">
 
         <TextView
@@ -33,27 +33,27 @@
             android:textColor="@android:color/black"
             android:textSize="20dp" />
 
-    </RelativeLayout>
+    </RelativeLayout>-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/waiter_cart_list"
         android:layout_width="match_parent"
-        android:layout_height="570dp"
+        android:layout_height="match_parent"
         android:layout_below="@+id/waiter_rlll"
         android:layout_above="@+id/waiter_next_process_btn">
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <Button
+    <!--<Button
         android:id="@+id/waiter_next_process_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#34f5ff"
+        android:layout_gravity="end"
+        android:layout_margin="0dp"
+        android:background="@color/colorPrimary"
         android:text="Next"
         android:textColor="@android:color/black"
-        android:textSize="20dp"
-        android:layout_margin="10dp"
-        />
+        android:textSize="20dp" />-->
 
 </LinearLayout>

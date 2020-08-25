@@ -7,9 +7,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -18,24 +15,21 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.therestaurant.Model.Cart;
+import com.example.therestaurant.Model.Orders;
 import com.example.therestaurant.Prevalent.PrevalentWaiter;
 import com.example.therestaurant.R;
-import com.example.therestaurant.ViewHolder.CartViewHolder;
+import com.example.therestaurant.ViewHolder.OrdersViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class WaiterCartActivity extends AppCompatActivity
 {
-    Toolbar toolbar;
+    private DatabaseReference ordersRef;
     private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
-    private Button NextProcessBtn;
-    private TextView txtTotalAmount;
+    RecyclerView.LayoutManager layoutManager;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -44,19 +38,20 @@ public class WaiterCartActivity extends AppCompatActivity
         setContentView(R.layout.activity_waiter_cart);
 
         toolbar = findViewById(R.id.waiter_toolbar_cart);
-        toolbar.setTitle("Cart");
+        toolbar.setTitle("Orders");
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(PrevalentWaiter.CurrentOnlineUser.getPhone_no()).child("Tables");
         recyclerView = findViewById(R.id.waiter_cart_list);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        NextProcessBtn = (Button) findViewById(R.id.waiter_next_process_btn);
-        txtTotalAmount =(TextView) findViewById(R.id.waiter_total_price);
+        //ProductList = (Button) findViewById(R.id.waiter_cart_product_list);
+        //txtTotalAmount =(TextView) findViewById(R.id.waiter_cart_total_price);
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
@@ -73,22 +68,32 @@ public class WaiterCartActivity extends AppCompatActivity
     {
         super.onStart();
 
-        final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
-
-        FirebaseRecyclerOptions<Cart> options =
-                new FirebaseRecyclerOptions.Builder<Cart>()
-                        .setQuery(cartListRef.child("Waiter View")
-                                .child(PrevalentWaiter.CurrentOnlineUser.getPhone_no()).child("Products"), Cart.class)
+        FirebaseRecyclerOptions<Orders> options
+                = new FirebaseRecyclerOptions.Builder<Orders>()
+                        .setQuery(ordersRef, Orders.class)
                         .build();
-        FirebaseRecyclerAdapter<Cart, CartViewHolder> adapter
-                = new FirebaseRecyclerAdapter<Cart, CartViewHolder>(options)
+
+        FirebaseRecyclerAdapter<Orders, OrdersViewHolder> adapter
+                = new FirebaseRecyclerAdapter<Orders, OrdersViewHolder>(options)
         {
             @Override
-            protected void onBindViewHolder(@NonNull CartViewHolder holder, int position, @NonNull final Cart model)
+            protected void onBindViewHolder(@NonNull OrdersViewHolder holder, final int position, @NonNull final Orders model)
             {
-                holder.txtProductQuantity.setText("Quantity = "+ model.getQuantity());
-                holder.txtProductPrice.setText("Price = Rs."+ model.getPrice());
-                holder.txtProductName.setText(model.getPname());
+                holder.txtTableName.setText("Table No.: " + model.getTable());
+               // holder.txtTotalPrice.setText("Price = Rs.");
+                holder.ProductList.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        String table = getRef(position).getKey();
+                        Intent intent = new Intent(WaiterCartActivity.this, WaiterShowProductActivity.class);
+                        intent.putExtra("table",table);
+                        startActivity(intent);
+                    }
+                });
+
+
 
                 holder.itemView.setOnClickListener(new View.OnClickListener()
                 {
@@ -97,11 +102,11 @@ public class WaiterCartActivity extends AppCompatActivity
                     {
                         CharSequence options[] = new CharSequence[]
                                 {
-                                        "Edit",
-                                        "Remove"
+                                        "Yes",
+                                        "No"
                                 };
                         AlertDialog.Builder builder = new AlertDialog.Builder(WaiterCartActivity.this);
-                        builder.setTitle("Cart Options:");
+                        builder.setTitle("Can we go to confirm final order:");
 
                         builder.setItems(options, new DialogInterface.OnClickListener()
                         {
@@ -110,32 +115,14 @@ public class WaiterCartActivity extends AppCompatActivity
                             {
                                 if ( i == 0 )
                                 {
-                                    Intent intent = new Intent(WaiterCartActivity.this, WaiterProductDetailsActivity.class);
-                                    intent.putExtra("pid",model.getPid());
+                                    Intent intent = new Intent(WaiterCartActivity.this, WaiterConfirmFinalOrderActivity.class);
+                                    intent.putExtra("table",model.getTable());
                                     startActivity(intent);
-
                                 }
                                 if ( i == 1 )
                                 {
-                                    cartListRef.child("Waiter View")
-                                            .child(PrevalentWaiter.CurrentOnlineUser.getPhone_no())
-                                            .child("Products")
-                                            .child(model.getPid())
-                                            .removeValue()
-                                            .addOnCompleteListener(new OnCompleteListener<Void>()
-                                            {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task)
-                                                {
-                                                    if(task.isSuccessful())
-                                                    {
-                                                        Toast.makeText(WaiterCartActivity.this, "Items removed successfully.", Toast.LENGTH_SHORT).show();
-
-                                                        Intent intent = new Intent(WaiterCartActivity.this, WaiterNavigationActivity.class);
-                                                        startActivity(intent);
-                                                    }
-                                                }
-                                            });
+                                    Intent intent = new Intent(WaiterCartActivity.this, WaiterCartActivity.class);
+                                    startActivity(intent);
                                 }
                             }
                         });
@@ -146,10 +133,10 @@ public class WaiterCartActivity extends AppCompatActivity
 
             @NonNull
             @Override
-            public CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+            public OrdersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
             {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_items_layout,parent,false);
-                CartViewHolder holder = new CartViewHolder(view);
+                OrdersViewHolder holder = new OrdersViewHolder(view);
                 return holder;
             }
         };

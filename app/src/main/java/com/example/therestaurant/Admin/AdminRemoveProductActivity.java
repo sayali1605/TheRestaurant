@@ -44,6 +44,7 @@ public class AdminRemoveProductActivity extends AppCompatActivity
         myProductsList.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         myProductsList.setLayoutManager(layoutManager);
+
         toolbar = findViewById(R.id.admin_toolbar_remove_product);
         toolbar.setTitle("Remove Product");
         setSupportActionBar(toolbar);

@@ -16,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.example.therestaurant.Admin.AdminAddProductActivity;
+import com.example.therestaurant.Admin.AdminNavigationActivity;
 import com.example.therestaurant.Model.Products;
 import com.example.therestaurant.Prevalent.PrevalentWaiter;
 import com.example.therestaurant.R;
@@ -215,6 +217,33 @@ public class WaiterProductDetailsActivity extends AppCompatActivity
                         }
                     }
                 });
+
+        final DatabaseReference kitchenorder = FirebaseDatabase.getInstance().getReference().child("kitchen orders");
+
+        final HashMap<String,Object> kitchenMap = new HashMap<>();
+        kitchenMap.put("waiterName",Name);
+        kitchenMap.put("pid",productId);
+        kitchenMap.put("pname",productName.getText().toString());
+        kitchenMap.put("price",productPrice.getText().toString());
+        kitchenMap.put("quantity",numberButton.getNumber());
+        kitchenMap.put("table",member.getSpinner());
+
+        kitchenorder.updateChildren(kitchenMap)
+        .addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful())
+                {
+                    Toast.makeText(WaiterProductDetailsActivity.this, "Product order is Successfully gone in kitchen...", Toast.LENGTH_SHORT).show();
+                }
+
+                else
+                {
+                    Toast.makeText(WaiterProductDetailsActivity.this, "Error while transferring product to kitchen: ", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
     private void getProductDetails(String productId)

@@ -20,7 +20,7 @@
             android:layout_height="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            android:background="#34f5ff"
+            android:background="@color/colorPrimary"
             android:elevation="8dp"
             />
         <FrameLayout

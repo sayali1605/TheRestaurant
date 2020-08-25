@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="30dp"
-    android:background="#34f5ff"
+    android:background="#B1F6FA"
     tools:context=".Waiter.WaiterRegistrationActivity">
 
     <TextView
