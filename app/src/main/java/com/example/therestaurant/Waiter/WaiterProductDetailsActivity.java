@@ -223,7 +223,6 @@ public class WaiterProductDetailsActivity extends AppCompatActivity
         final HashMap<String,Object> kitchenMap = new HashMap<>();
         kitchenMap.put("waiterName",Name);
         kitchenMap.put("pid",productId);
-        kitchenMap.put("image",productImage);
         kitchenMap.put("pname",productName.getText().toString());
         kitchenMap.put("price",productPrice.getText().toString());
         kitchenMap.put("quantity",numberButton.getNumber());

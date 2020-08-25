@@ -15,14 +15,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ReceivedOrdersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
 {
     public TextView txtProductName, txtquantity;
-    public CircleImageView imageView;
     public ItemClickListner listner;
 
     public ReceivedOrdersViewHolder(@NonNull View itemView)
     {
         super(itemView);
 
-        imageView = (CircleImageView) itemView.findViewById(R.id.order_product_image);
         txtProductName = (TextView) itemView.findViewById(R.id.order_product_name);
         txtquantity = (TextView) itemView.findViewById(R.id.order_product_quantity);
     }

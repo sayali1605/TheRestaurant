@@ -84,7 +84,6 @@ public class KitchenReceivedOrderActivity extends AppCompatActivity
                     {
                         holder.txtProductName.setText(model.getPname());
                         holder.txtquantity.setText("Quantity " + model.getQuantity());
-                        Picasso.get().load(model.getImage()).into(holder.imageView);
                     }
 
                     @NonNull

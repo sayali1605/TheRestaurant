@@ -2,27 +2,18 @@ package com.example.therestaurant.Model;
 
 public class ReceivedOrders
 {
-    public String pid,pname,price,quantity,table,waiterName,image;
+    public String pid,pname,price,quantity,table,waiterName;
 
     public ReceivedOrders() {
     }
 
-    public ReceivedOrders(String pid, String pname, String price, String quantity, String table, String waiterName, String image) {
+    public ReceivedOrders(String pid, String pname, String price, String quantity, String table, String waiterName) {
         this.pid = pid;
         this.pname = pname;
         this.price = price;
         this.quantity = quantity;
         this.table = table;
         this.waiterName = waiterName;
-        this.image = image;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public String getPid() {
