@@ -14,22 +14,24 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.therestaurant.Admin.AdminNavigationActivity;
 import com.example.therestaurant.Admin.AdminRemoveProductActivity;
-import com.example.therestaurant.Model.Products;
 import com.example.therestaurant.Model.ReceivedOrders;
 import com.example.therestaurant.R;
-import com.example.therestaurant.ViewHolder.ProductViewHolder;
 import com.example.therestaurant.ViewHolder.ReceivedOrdersViewHolder;
+import com.example.therestaurant.Waiter.Member;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
 
 public class KitchenReceivedOrderActivity extends AppCompatActivity
 {
@@ -37,6 +39,7 @@ public class KitchenReceivedOrderActivity extends AppCompatActivity
     private RecyclerView myProductsList;
     RecyclerView.LayoutManager layoutManager;
     Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -83,7 +86,75 @@ public class KitchenReceivedOrderActivity extends AppCompatActivity
                     protected void onBindViewHolder(@NonNull ReceivedOrdersViewHolder holder, int position, @NonNull final ReceivedOrders model)
                     {
                         holder.txtProductName.setText(model.getPname());
-                        holder.txtquantity.setText("Quantity " + model.getQuantity());
+                        holder.txtquantity.setText("Quantity = " + model.getQuantity());
+                        holder.txttableName.setText(model.getTable());
+                        holder.txtwaiterName.setText(model.getWaiterName());
+
+                        holder.itemView.setOnClickListener(new View.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(View v)
+                            {
+                                AlertDialog.Builder mBuilder = new AlertDialog.Builder(KitchenReceivedOrderActivity.this);
+                                View mView = getLayoutInflater().inflate(R.layout.dialog_spinner,null);
+                                mBuilder.setTitle("Select time for order: ");
+                                final Spinner mSpinner = (Spinner) mView.findViewById(R.id.kitchen_spinner);
+                                ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(KitchenReceivedOrderActivity.this,
+                                        android.R.layout.simple_spinner_item,
+                                        getResources().getStringArray(R.array.timeList));
+                                adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                mSpinner.setAdapter(adapter1);
+
+                                mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener()
+                                {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which)
+                                    {
+                                        if (!mSpinner.getSelectedItem().toString().equalsIgnoreCase("Choose a time:"))
+                                        {
+                                            final HashMap<String,Object> orderMap = new HashMap<>();
+                                            orderMap.put("Order Time",mSpinner.getSelectedItem().toString());
+
+                                            Productref.child(model.getTime())
+                                                    .updateChildren(orderMap)
+                                            .addOnCompleteListener(new OnCompleteListener<Void>()
+                                            {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task)
+                                                {
+                                                    if(task.isSuccessful())
+                                                    {
+                                                        Toast.makeText(KitchenReceivedOrderActivity.this, "Time for Product is added Successfully...", Toast.LENGTH_SHORT).show();
+                                                    }
+
+                                                    else
+                                                    {
+                                                        Toast.makeText(KitchenReceivedOrderActivity.this, "Error while giving time from kitchen...", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
+                                            /*Toast.makeText(KitchenReceivedOrderActivity.this, mSpinner.getSelectedItem().toString(),
+                                                    Toast.LENGTH_SHORT)
+                                            .show();*/
+                                            dialog.dismiss();
+                                        }
+                                    }
+                                });
+
+                                mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+                                {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which)
+                                    {
+                                         dialog.dismiss();
+                                    }
+                                });
+                                mBuilder.setView(mView);
+                                AlertDialog dialog = mBuilder.create();
+                                dialog.show();
+                            }
+                        });
+
                     }
 
                     @NonNull

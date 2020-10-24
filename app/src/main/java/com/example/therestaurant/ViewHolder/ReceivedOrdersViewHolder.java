@@ -1,20 +1,15 @@
 package com.example.therestaurant.ViewHolder;
 
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.therestaurant.Interface.ItemClickListner;
 import com.example.therestaurant.R;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class ReceivedOrdersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
 {
-    public TextView txtProductName, txtquantity;
+    public TextView txtProductName, txtquantity, txttableName, txtwaiterName;
     public ItemClickListner listner;
 
     public ReceivedOrdersViewHolder(@NonNull View itemView)
@@ -23,6 +18,8 @@ public class ReceivedOrdersViewHolder extends RecyclerView.ViewHolder implements
 
         txtProductName = (TextView) itemView.findViewById(R.id.order_product_name);
         txtquantity = (TextView) itemView.findViewById(R.id.order_product_quantity);
+        txttableName = (TextView) itemView.findViewById(R.id.order_table_name);
+        txtwaiterName = (TextView) itemView.findViewById(R.id.order_waiter_name);
     }
 
     public void setItemClickListner(ItemClickListner listner)

@@ -24,15 +24,16 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
-public class AdminRegistrationActivity extends AppCompatActivity {
-
+public class AdminRegistrationActivity extends AppCompatActivity
+{
     private Button RegisterButton;
     private TextView mLoginBtn;
     private EditText InputNam, InputPhoneNo, InputPwd ,InputConfirmPassword ;
     ProgressBar progressBar;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_registration);
 
@@ -91,7 +92,6 @@ public class AdminRegistrationActivity extends AppCompatActivity {
                     InputPhoneNo.setError("Enter Valid Phone Number");
                     return;
                 }
-
                 if (password.length() < 8)
                 {
                     InputPwd.setError("Password must be  greater than or equal to 8 characters.");
@@ -126,7 +126,7 @@ public class AdminRegistrationActivity extends AppCompatActivity {
                                         {
                                             if(task.isSuccessful())
                                             {
-                                                Toast.makeText(AdminRegistrationActivity.this, "Congratulations farmers, your account has been created.", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(AdminRegistrationActivity.this, "Congratulations, your account has been created.", Toast.LENGTH_SHORT).show();
                                                 Intent intent =new Intent(AdminRegistrationActivity.this, AdminLoginActivity.class);
                                                 startActivity(intent);
                                                 finish();

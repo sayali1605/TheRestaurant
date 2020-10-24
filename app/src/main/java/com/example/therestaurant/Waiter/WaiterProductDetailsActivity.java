@@ -45,12 +45,12 @@ public class WaiterProductDetailsActivity extends AppCompatActivity
     private ElegantNumberButton numberButton;
     private CircleImageView productImage;
     private TextView productPrice,productName;
-    private String productId = "",Name,Phone,status="unpaid";
+    private String productId = "" , Name , Phone , status = "unpaid" ;
     private DatabaseReference  WaiterRef;
     TextView selected;
     private Spinner spinner;
     Member member;
-    //int maxid = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -114,8 +114,8 @@ public class WaiterProductDetailsActivity extends AppCompatActivity
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+            public void onNothingSelected(AdapterView<?> parent)
+            {
             }
         });
 
@@ -147,7 +147,6 @@ public class WaiterProductDetailsActivity extends AppCompatActivity
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError)
                     {
-
                     }
                 });
     }
@@ -197,7 +196,6 @@ public class WaiterProductDetailsActivity extends AppCompatActivity
                             cartMap.put("status",status);
                             cartMap.put("table",member.getSpinner());
 
-
                             cartListRef.child(PrevalentWaiter.CurrentOnlineUser.getPhone_no())
                                     .child("Tables").child(member.getSpinner()).child(productId)
                                     .updateChildren(cartMap)
@@ -226,12 +224,15 @@ public class WaiterProductDetailsActivity extends AppCompatActivity
         kitchenMap.put("pname",productName.getText().toString());
         kitchenMap.put("price",productPrice.getText().toString());
         kitchenMap.put("quantity",numberButton.getNumber());
+        kitchenMap.put("time",saveCurrentTime);
         kitchenMap.put("table",member.getSpinner());
 
-        kitchenorder.child(productName.getText().toString()).updateChildren(kitchenMap)
-        .addOnCompleteListener(new OnCompleteListener<Void>() {
+        kitchenorder.child(saveCurrentTime).updateChildren(kitchenMap)
+        .addOnCompleteListener(new OnCompleteListener<Void>()
+        {
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
+            public void onComplete(@NonNull Task<Void> task)
+            {
                 if(task.isSuccessful())
                 {
                     Toast.makeText(WaiterProductDetailsActivity.this, "Product order is Successfully gone in kitchen...", Toast.LENGTH_SHORT).show();
@@ -243,7 +244,6 @@ public class WaiterProductDetailsActivity extends AppCompatActivity
                 }
             }
         });
-
     }
 
     private void getProductDetails(String productId)
@@ -267,7 +267,6 @@ public class WaiterProductDetailsActivity extends AppCompatActivity
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
     }
